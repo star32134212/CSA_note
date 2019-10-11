@@ -19,3 +19,7 @@ END {print "Dir num:"totald "\nFile num:" totalf "\nTotal:" totals}'
 `sed '1d'` : 刪除第一行  
 `NR` : 代表awk目前處理的行數  
 `$1=="d" {totald += 1}; $1=="-" {totalf += 1}` : 如果是目錄開頭會是d，如果是檔案開頭會是-  
+
+
+寫成sh後要使用  
+`chmod +x hw2-1.sh` 讓sh檔可以執行  
