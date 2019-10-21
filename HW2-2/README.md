@@ -1,9 +1,15 @@
 CSA HW2 Note
 ===
 
+CSA HW2 Note
+===
+
 
 Main menu
 ===
+
+![](https://i.imgur.com/wabLm85.png)
+
 ```
 menu(){
 	dialog --title "HW2-2_0513404" --menu "SYS INFO" 12 36 6\
@@ -24,8 +30,24 @@ menu(){
 `RESULT=/tmp/menu.sh.$$`：在最前面要先宣告RESULT代表什麼文件，把它存放在tmp之下。  
 `[ -f $RESULT ] && rm $RESULT`：既然創建了文件，那用完就要刪掉才不會每次執行就累積一個，最後會變一坨垃圾占空間。中括號判斷，`-f`判斷檔案是否存在，存在則回傳True，跑下一段將RESULT刪掉。  
 
+CPU Info
+===
+![](https://i.imgur.com/ezN1u1W.png)
+```
+cpu(){
+	dialog --title "CPU Info" --msgbox \
+	"$(sysctl hw.model hw.machine hw.ncpu)" \
+	12 72
+	result=$?
+	if [ $result -eq 0 ] ; then
+		menu
+	fi
+}
+```
+
 Memory Info
 ===
+![](https://i.imgur.com/jHOBh4n.png)
 ```
 mem(){
 	while true
@@ -74,6 +96,10 @@ read 鍵盤輸入的值，t1代表暫停1秒，在while中代表1秒更新一次
 
 NET Info
 ===
+![](https://i.imgur.com/DbFQ8iT.png)
+
+![](https://i.imgur.com/pTfVBxf.png)
+
 ```
 net(){
 	cc=$(ifconfig -l | wc -w | sed 's/[[:space:]]//g')
@@ -101,6 +127,7 @@ msgbox是最基本的dialog，就呈現一些內文，按下ok可以退出，利
 
 File Browser
 ===
+![](https://i.imgur.com/I9gAJfX.png)
 
 ```
 file(){ 
@@ -135,6 +162,10 @@ file(){
 ```
 這裡最麻煩的部分，先印出目前目錄下所有檔案，然後使用`xargs`這個指令，他可以指定一個變數，然後讓pipe進來的東西一個一個丟進指定的下一個指令，我這裡是用`xargs -I % file --mime-type %`，這樣每個檔案都會被餵進`file --mime-type`，這會印出檔案的類型。然後就是根據選擇判斷是否為可以編輯的文字檔，我用`grep "text"`來判斷，這樣如果沒有text就會變成空字串。  
 
+![](https://i.imgur.com/nt5jaq3.png)  
+
+![](https://i.imgur.com/ImwcSSC.png)  
+
 ```
 textinfo(){
 	f1=$(echo "$chfile")
@@ -158,6 +189,8 @@ textinfo(){
 ```
 判斷是文字檔就跑textinfo，這是一個yesno視窗，其實yes/no是可以改文字的，這裡將no改成Edit，接著是判斷輸入，使用者按Yes代表0、No代表2、esc代表255，所以讓按下Edit(本質為No)後呼叫`$EDITOR`，他會以目前環境變數設定的編輯器來開啟指定檔案。作業還需要印出檔案的大小，`du -sh *`是後來查到的一個蠻好用的指令，可以直接印出檔案的大小，`-h`可以用適合的單位印出，就不用像前面那樣使用while。
 
+
+![](https://i.imgur.com/uiVs27r.png)
 ```
 notextinfo(){
 	fl=$(echo "$chfile")
