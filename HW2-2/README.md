@@ -1,10 +1,6 @@
 CSA HW2 Note
 ===
 
-CSA HW2 Note
-===
-
-
 Main menu
 ===
 
