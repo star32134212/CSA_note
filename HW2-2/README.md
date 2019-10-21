@@ -1,11 +1,10 @@
+CSA HW2 Note
+===
+
+
+Main menu
+===
 ```
-#!/bin/sh
-RESULT=/tmp/menu.sh.$$
-NETCH=/tmp/netchoice.sh.$$
-FILE=/tmp/allfile.sh.$$
-x=$(sysctl vm.kmem_size | cut -d" " -f2)
-y=$(sysctl vm.kmem_map_size | cut -d" " -f2)
-z=$((y*100/x))
 menu(){
 	dialog --title "HW2-2_0513404" --menu "SYS INFO" 12 36 6\
 	1 "CPU INFO" 2 "MEMORY INFO" 3 "NETWORK INFO" 4 "FILE BROWSER"\
@@ -19,15 +18,15 @@ menu(){
 	esac
 	[ -f $RESULT ] && rm $RESULT
 }
-cpu(){
-	dialog --title "CPU Info" --msgbox \
-	"$(sysctl hw.model hw.machine hw.ncpu)" \
-	12 72
-	result=$?
-	if [ $result -eq 0 ] ; then
-		menu
-	fi
-}
+```
+`dialog --title "A" --menu "B" 12 36 6 "C" "D"`：A標題 B內文 C選項 D選項描述 size(12,36,6)  
+`2> "${RESULT}"`：代表將收到的訊息壓進RESULT裡  
+`RESULT=/tmp/menu.sh.$$`：在最前面要先宣告RESULT代表什麼文件，把它存放在tmp之下。  
+`[ -f $RESULT ] && rm $RESULT`：既然創建了文件，那用完就要刪掉才不會每次執行就累積一個，最後會變一坨垃圾占空間。中括號判斷，`-f`判斷檔案是否存在，存在則回傳True，跑下一段將RESULT刪掉。  
+
+Memory Info
+===
+```
 mem(){
 	while true
 	do
@@ -46,6 +45,36 @@ mem(){
 	done
 	menu
 }
+```
+
+`dialog --title "" --gauge "" 12 72 z`:gauge 是進度條z代表跑了幾％。  
+以下是z的計算：  
+```
+x=$(sysctl vm.kmem_size | cut -d" " -f2)
+y=$(sysctl vm.kmem_map_size | cut -d" " -f2)
+z=$((y*100/x))
+```
+
+`sysctl vm.kmem_size vm.kmem_map_size vm.kmem_map_free`：分別印出總共多少記憶體、用了多少和還剩多少。  
+```
+split( "B KB MB GB TB" , v ); unit=1; \
+while( $1>1024 ){$1/=1024; unit++ }print $1,v[unit] }'
+```
+依照適合的單位印出大小，用while迴圈判斷。  
+
+作業要求不斷更新目前記憶體，直到按下ENTER退出為止，因此包了一個While。其實gauge本身就沒有ok鍵，因此要自己想辦法補上退出的方式。  
+```
+read -t1 ans
+if [ $? -eq 0 ]
+	then
+	break
+fi
+```
+read 鍵盤輸入的值，t1代表暫停1秒，在while中代表1秒更新一次資訊，ans是自訂去接電腦輸入的變數，ENTER代表空字串""，這裡其實不需要ans這個變數，$?代表前一個指令，ENTER代表0，總之這裡判斷只要按下ENTER就跳出迴圈。  
+
+NET Info
+===
+```
 net(){
 	cc=$(ifconfig -l | wc -w | sed 's/[[:space:]]//g')
 	i=0
@@ -65,6 +94,15 @@ device_info(){
 	[ -f $NETCH ] && rm $NETCH
 	net
 }
+```
+`sed 's/[[:space:]]//g'`：把空白的部分刪掉，由於`wc -w`算出的字數不知為啥前面有段空白，因此需要把它刪除才可以得到單純的數字。
+這裡同樣使用menu，在製作選項的地方需要把格式弄成兩個一組的，因此用awk排成兩個一組在餵給dialog吃，最後同樣把選擇放到一個文件去再去讀取成變數，接著拿讀取到的變數去device_info這個自訂函數印出相關資訊。
+msgbox是最基本的dialog，就呈現一些內文，按下ok可以退出，利用`ifconfig`將網路相關資訊印出來然後用`grep`抓自己想要的部分。  
+
+File Browser
+===
+
+```
 file(){ 
 	nn=$(ls -al | awk '{print $9}'|sed '1d' |wc -w)
 	dialog --title "" --menu "File Browser:$(pwd)" 25 72 12\
@@ -94,6 +132,10 @@ file(){
 	fi
 	menu
 }
+```
+這裡最麻煩的部分，先印出目前目錄下所有檔案，然後使用`xargs`這個指令，他可以指定一個變數，然後讓pipe進來的東西一個一個丟進指定的下一個指令，我這裡是用`xargs -I % file --mime-type %`，這樣每個檔案都會被餵進`file --mime-type`，這會印出檔案的類型。然後就是根據選擇判斷是否為可以編輯的文字檔，我用`grep "text"`來判斷，這樣如果沒有text就會變成空字串。  
+
+```
 textinfo(){
 	f1=$(echo "$chfile")
 	f2=$(echo "$chfile"|sed 's/.$//')
@@ -113,7 +155,10 @@ textinfo(){
 	file
 	
 }
+```
+判斷是文字檔就跑textinfo，這是一個yesno視窗，其實yes/no是可以改文字的，這裡將no改成Edit，接著是判斷輸入，使用者按Yes代表0、No代表2、esc代表255，所以讓按下Edit(本質為No)後呼叫`$EDITOR`，他會以目前環境變數設定的編輯器來開啟指定檔案。作業還需要印出檔案的大小，`du -sh *`是後來查到的一個蠻好用的指令，可以直接印出檔案的大小，`-h`可以用適合的單位印出，就不用像前面那樣使用while。
 
+```
 notextinfo(){
 	fl=$(echo "$chfile")
 	f2=$(echo "$chfile")
@@ -126,11 +171,16 @@ notextinfo(){
 	12 72
 	file
 }
+
+```
+至於非文字檔案只要印出相關資訊就非常簡單，使用msgbox解決。  
+
+
+
+```
 cdto(){
 	cd $chfile2
 	file
 }
-
-menu
-
 ```
+作業還有要求如果是目錄的話，就要進到那個目錄再顯示該目錄底下的檔案，誤打誤撞發現直接寫一個新函數包一個`cd`就解決了。  
