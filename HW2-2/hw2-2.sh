@@ -28,14 +28,21 @@ cpu(){
 	fi
 }
 mem(){
-	read -es | dialog --title "Memory Info" --gauge \
-	"$(sysctl vm.kmem_size vm.kmem_map_size vm.kmem_map_free | \
-	cut -d" " -f2 | awk 'NR == 1 {print "Total:"}; \
-	NR == 2 {print "Used:"}; NR == 3 {print "Free:"}; \
-	{ split( "B KB MB GB TB" , v ); unit=1; \
-	while( $1>1024 ){$1/=1024; unit++ }print $1,v[unit] }')" \
-	12 72 $z
-	read ans 
+	while true
+	do
+		read -es | dialog --title "Memory Info" --gauge \
+		"$(sysctl vm.kmem_size vm.kmem_map_size vm.kmem_map_free | \
+		cut -d" " -f2 | awk 'NR == 1 {print "Total:"}; \
+		NR == 2 {print "Used:"}; NR == 3 {print "Free:"}; \
+		{ split( "B KB MB GB TB" , v ); unit=1; \
+		while( $1>1024 ){$1/=1024; unit++ }print $1,v[unit] }')" \
+		12 72 $z
+		read -t1 ans
+		if [ $? -eq 0 ]
+		then
+			break
+		fi
+	done
 	menu
 }
 net(){
