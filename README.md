@@ -15,3 +15,7 @@ abc@domain: Email
 ### 壓縮
 `tar xvf FileName.tar` 解壓縮tar  
 `tar cvf FileName.tar DirName` 壓縮tar  
+
+
+### 安裝
+`sudo pkg install XXXX`
