@@ -19,3 +19,6 @@ abc@domain: Email
 
 ### 安裝
 `sudo pkg install XXXX`
+
+### HW3 note
+`cat /etc/passwd` 列出所有使用者  
