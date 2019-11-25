@@ -1,6 +1,8 @@
 # HW3-1 要求
 
-### FTP over TLS (5%)
+FTP over TLS (5%)
+===
+
 ### sysadm (15%)  
 * login from ssh (4%)  
 * Full access to “public” (3%)  
@@ -37,11 +39,11 @@ shell的部分像是平常寫作業用的orange是用/bin/tcsh，如果不想給
 #### pure-ftpd
 `sudo pure-pw useradd ftp-vip1 -u ftp -g ftp -d /home/ftp-vip1 -m` 新增使用者   
 這裡要記得`-m`才會把使用者資料放進資料庫(/usr/local/etc/pureftpd.pdb)，不然就是要另外`pure-pw mkdb`  
-`-u ftp`：ftp 為前一個步驟所建立的，可以讓所有的虛擬帳號都使用這個。
-`-d /hme/ftp`：設定要給這個帳號存放檔案的目錄。
-`pure-pw userdel user` 刪除使用者
-`service pure-ftpd restart` 有改conf要restart
-`pure-ftpwho` 列出誰正在連ftp server
+`-u ftp`：ftp 為前一個步驟所建立的，可以讓所有的虛擬帳號都使用這個  
+`-d /hme/ftp`：設定要給這個帳號存放檔案的目錄  
+`pure-pw userdel user` 刪除使用者  
+`service pure-ftpd restart` 有改conf要restart  
+`pure-ftpwho` 列出誰正在連ftp server  
 
 #### pure-pw
 虛擬帳號的管理工具：
@@ -56,16 +58,14 @@ shell的部分像是平常寫作業用的orange是用/bin/tcsh，如果不想給
 `openssl req -x509 -nodes -newkey rsa:1024 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem`
 弄好記得去pure-ftpd.conf改，要讓pure-ftpd可以連到pure-ftpd.pem這個檔  
 
-#### other
- /var/log/messag 可以看錯誤訊息  
-
-
-
 #### wireguard
 demo要連到TA電腦，所以再複習一次wg：  
-`wg-quick up wg0` Start interface 
-`wg-quick down wg0` Stop interface
-pure-ftpd.conf超級長，可以用下面兩個指令去讀比較方便：
-`more [file]` 可以從頭往下看，但缺點是不能回頭，不過如果很確定想看的偏文件後面直接`cat`比較快owo
-`less [file]` 可以往前翻，比`more`更有彈性，而且可以查關鍵字，用`/ketword`去找
+`wg-quick up wg0` Start interface  
+`wg-quick down wg0` Stop interface  
+
+#### other
+ /var/log/messag 可以看錯誤訊息  
+pure-ftpd.conf超級長，可以用下面兩個指令去讀比較方便：  
+`more [file]` 可以從頭往下看，但缺點是不能回頭，不過如果很確定想看的偏文件後面直接`cat`比較快owo  
+`less [file]` 可以往前翻，比`more`更有彈性，而且可以查關鍵字，用`/ketword`去找  
 
