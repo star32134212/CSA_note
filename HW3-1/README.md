@@ -68,4 +68,11 @@ demo要連到TA電腦，所以再複習一次wg：
 pure-ftpd.conf超級長，可以用下面兩個指令去讀比較方便：  
 `more [file]` 可以從頭往下看，但缺點是不能回頭，不過如果很確定想看的偏文件後面直接`cat`比較快owo  
 `less [file]` 可以往前翻，比`more`更有彈性，而且可以查關鍵字，用`/ketword`去找  
+`df` 檢查硬碟使用量
+
+#### 參考教學
+[pure-ftpd架設教學](http://mail.lsps.tp.edu.tw/~gsyan/freebsd2001/ftp-pureftpd.html)  
+[pure-ftpd.conf文件說明](https://www.twblogs.net/a/5bedb90d2b717720b51fa65c)  
+[systemuser的一些操作](https://dywang.csie.cyut.edu.tw/dywang/linuxSystem/node58.html)  
+[作業3-2,3-3的掙扎owq](https://hackmd.io/52tlWKU_Rd2H0atOlT5Bdg?both)  
 
