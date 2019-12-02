@@ -71,7 +71,7 @@ pure-ftpd.conf超級長，可以用下面兩個指令去讀比較方便：
 `df` 檢查硬碟使用量
 
 #### 參考教學
-[pure-ftpd架設教學](http://mail.lsps.tp.edu.tw/~gsyan/freebsd2001/ftp-pureftpd.html)  
+[pure-ftpd架設教學](http://mail.lsps.tp.edu.tw/~gsyan/freebsd2001/ftp-pureftpd.html)    
 [pure-ftpd.conf文件說明](https://www.twblogs.net/a/5bedb90d2b717720b51fa65c)  
 [systemuser的一些操作](https://dywang.csie.cyut.edu.tw/dywang/linuxSystem/node58.html)  
 [作業3-2,3-3的掙扎owq](https://hackmd.io/52tlWKU_Rd2H0atOlT5Bdg?both)  
