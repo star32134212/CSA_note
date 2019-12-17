@@ -50,14 +50,26 @@ app(10%)
 
 nextcloud(10%)
 ===
-`https://orangehello.nctu.me/nextcloud/`進入nextcloud  
+`https://orangehello.nctu.me/nextcloud/`：進入nextcloud  
 nc / 0513404  
 0513404 / 0513404  
 
 Personal Webpage(10%)
 ===
-不會:)  
+`https://orangehello.nctu.me/sites/~0513404/`：可以看到自訂頁面
 
+加上這段  
+```
+	location ~ ^\/sites {
+		rewrite /sites/~([^/]+) /nextcloud/data/$1/files/public_html/index.html last;
+	}
+```
+改這段 把templates後的data拿掉  
+```
+    location ~ ^\/nextcloud\/(?:build|tests|config|lib|3rdparty|templates)\/ {
+            deny all;
+    }
+```
 WebSocket(10%)
 ===
 不會:)  
