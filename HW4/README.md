@@ -40,6 +40,7 @@ MySQL(10%+5%)
 ===
 user named ‘nc’ and a database named ‘nextcloud’ and pwd studen ID  
 Bonus:Explain what this and other isolation levels mean   
+[餵狗](https://myapollo.com.tw/zh-tw/database-transaction-isolation-levels/)
 
 app(10%)
 ===
