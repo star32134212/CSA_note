@@ -15,21 +15,16 @@ mysql
 `wg-quick up wg0` Start interface  
 `wg-quick down wg0` Stop interface  
 
-`https://192.168.56.101/public/`：404  
-
-`https://192.168.56.101/private/`：private orange  
-
-
-`https://orangehello.nctu.me/public/`：404  
-
-`https://10.113.0.129/public/`：404  
-`https://10.113.0.129/private/`：403  
-`https://10.113.0.129`：public orange  
-
 Virtual Host  and Access Control(10%)
 ===
-`https://192.168.56.101`：public orange  
+`https://192.168.56.101`：ip orange  
 `https://orangehello.nctu.me`：public orange  
+`https://192.168.56.101/public/`：404  
+`https://192.168.56.101/private/`：輸入密碼後顯示private orange  
+`https://orangehello.nctu.me/public/`：404  
+`https://10.113.0.129/public/`：404  
+`https://10.113.0.129/private/`：403  
+`https://10.113.0.129`：ip orange   
 
 HTTPS(20%)
 ===
