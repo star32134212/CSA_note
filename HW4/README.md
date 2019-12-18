@@ -60,6 +60,14 @@ app(10%)
 `https://orangehello.nctu.me/app/1+2`：(/app/index.php) result: 3  
 `https://orangehello.nctu.me/app?name=orange`：(/app/index.php) Hello, orange  
 
+SQL(10%)
+===
+`mysql -u nc -p`  
+`select @@tx_isolation;`  
+`mysql -u root -p`  
+`show grants for nc@localhost;`  
+
+
 nextcloud(10%)
 ===
 `https://orangehello.nctu.me/nextcloud/`：進入nextcloud  
@@ -86,4 +94,4 @@ WebSocket(10%)
 ===
 不會:)  
 
-
+ 
