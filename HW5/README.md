@@ -1,6 +1,7 @@
 HW5 note
 ===
 [大佬yuuki教學](https://yuuki1532.wordpress.com/2020/01/05/sa-hw5-nisnfs/)  
+[資工大佬們的共筆教學](https://hackmd.io/qHjXJTbFSK2uxt8erN8iFw)  
 
 ### 5-1 NIS Client(15%)  
 他原本的設定就是相容模式 要靠以前 +:::::的方式 才能用
